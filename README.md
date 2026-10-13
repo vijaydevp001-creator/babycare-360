@@ -27,7 +27,6 @@ cp .env.example .env
 npm install
 npm run dev
 ```
-Server: http://localhost:5000
 
 ### 3. Frontend Setup
 ```bash
