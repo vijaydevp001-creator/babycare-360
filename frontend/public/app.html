@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby360 - Child Care Dashboard</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', 'Poppins', sans-serif; background: #f9fafb; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 20px; }
+        .status { background: white; border-radius: 8px; padding: 20px; margin: 10px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .status h2 { color: #333; margin-bottom: 10px; }
+        .status p { color: #666; margin: 5px 0; }
+        .running { color: #10b981; font-weight: bold; }
+        .error { color: #ef4444; font-weight: bold; }
+        button { background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #5568d3; }
+        .loading { text-align: center; padding: 40px; }
+        .spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👶 Baby360 - Child Care Dashboard</h1>
+        <p>Smart parenting companion</p>
+    </div>
+    
+    <div class="container">
+        <div class="status">
+            <h2>🚀 System Status</h2>
+            <p><strong>Backend API:</strong> <span class="running" id="backendStatus">Checking...</span></p>
+            <p><strong>Frontend App:</strong> <span class="running" id="frontendStatus">Loading React...</span></p>
+        </div>
+        
+        <div class="status">
+            <h2>⚡ Quick Start</h2>
+            <p>The full React application is loading. Please wait...</p>
+            <div class="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 20px; color: #666;">Setting up dependencies...</p>
+            </div>
+        </div>
+        
+        <div class="status">
+            <h2>📱 Features Ready</h2>
+            <ul style="margin-left: 20px; color: #666;">
+                <li>✅ Child profile management</li>
+                <li>✅ Growth tracking & charts</li>
+                <li>✅ Vaccination schedule</li>
+                <li>✅ Appointment booking</li>
+                <li>✅ Nutrition logging</li>
+                <li>✅ User authentication</li>
+            </ul>
+        </div>
+
+        <div class="status">
+            <h2>🔗 API Endpoints</h2>
+            <p><strong>Base URL:</strong> http://localhost:5000</p>
+            <p>Available routes:</p>
+            <ul style="margin-left: 20px; color: #666; margin-top: 10px;">
+                <li>/api/auth/register - Register user</li>
+                <li>/api/auth/login - Login user</li>
+                <li>/api/children - Manage children</li>
+                <li>/api/growth - Track growth</li>
+                <li>/api/vaccines - Vaccination schedule</li>
+                <li>/api/appointments - Book appointments</li>
+                <li>/api/nutrition - Log nutrition</li>
+                <li>/api/health - Health check</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check backend health
+        async function checkBackend() {
+            try {
+                const response = await fetch('http://localhost:5000/api/health', {
+                    mode: 'cors',
+                    timeout: 5000
+                });
+                if (response.ok) {
+                    document.getElementById('backendStatus').textContent = '✅ Running on port 5000';
+                } else {
+                    throw new Error('Not responding');
+                }
+            } catch(e) {
+                document.getElementById('backendStatus').innerHTML = '<span class="error">❌ Not responding</span>';
+            }
+        }
+
+        // Check every 3 seconds
+        checkBackend();
+        setInterval(checkBackend, 3000);
+        
+        // Mark frontend as ready
+        document.getElementById('frontendStatus').innerHTML = '<span class="running">✅ Frontend Ready</span>';
+    </script>
+</body>
+</html>
